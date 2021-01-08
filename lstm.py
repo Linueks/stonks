@@ -1,20 +1,13 @@
-import numpy as np
-import pandas_datareader as web
-import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
-import matplotlib.pyplot as plt
+from parameters_and_imports import *
 
 
-stock_ticker = 'TSLA'
-start_date = '2015-01-01'
-end_date = '2021-01-07'
 
 
 #get the stock quote
 df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
-                    end=end_date)
+                    end=todays_date)
 
 
 """
@@ -29,7 +22,6 @@ plt.show()
 #generating training and test samples
 data = df.filter(['Close'])
 dataset = data.values
-training_percentage = 0.8
 training_data_length = np.int(np.ceil(len(dataset) * training_percentage))
 
 
@@ -37,14 +29,14 @@ training_data_length = np.int(np.ceil(len(dataset) * training_percentage))
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_data = scaler.fit_transform(dataset)
 training_data = scaled_data[0:training_data_length, :]
-print(training_data)
 
 
 #splitting into x_train and y_train datasets. Here the
 x_train = []
 y_train = []
-for i in range(60, len(training_data)):
-    x_train.append(training_data[i-60:i, 0])
+x_train_len = 60
+for i in range(x_train_len, len(training_data)):
+    x_train.append(training_data[i-x_train_len:i, 0])
     y_train.append(training_data[i, 0])
 
 x_train, y_train = np.array(x_train), np.array(y_train)
@@ -67,16 +59,21 @@ model.add(Dense(units=1))
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 #train the model
-batch_size = 2
-epochs = 10
 model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
 model.save(f'saved_models/my_model_bs{batch_size}_eps{epochs}')
 
 test_data = scaled_data[training_data_length - 60:, :]
 x_test = []
 y_test = dataset[training_data_length:, :]
-for i in range(60, len(test_data)):
-    x_test.append(test_data[i-60:i, 0])
+
+
+
+#here i use x_train_len again, because theyre both the same value in my original
+#code, however might be better to use two distinct variables here tbh
+for i in range(x_train_len, len(test_data)):
+    x_test.append(test_data[i-x_train_len:i, 0])
+
+
 
 x_test = np.array(x_test)
 #reshape in same way as for the x_training data, this is because the model
