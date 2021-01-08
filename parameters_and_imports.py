@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from datetime import date, timedelta
 from sklearn.preprocessing import MinMaxScaler
 
+plt.style.use('ggplot')
 
 
 
@@ -19,4 +20,4 @@ todays_date = date.today()
 
 training_percentage = 0.8
 batch_size = 1
-epochs = 2
+epochs = 10

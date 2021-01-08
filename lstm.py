@@ -62,7 +62,7 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
 model.save(f'saved_models/my_model_bs{batch_size}_eps{epochs}')
 
-test_data = scaled_data[training_data_length - 60:, :]
+test_data = scaled_data[training_data_length - x_train_len:, :]
 x_test = []
 y_test = dataset[training_data_length:, :]
 
