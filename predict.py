@@ -17,8 +17,14 @@ print(f'saved_models\{args.model}')
 print(model_name)
 print('saved_models\\' + model_name)
 print('saved_models\my_model_bs1_eps10')
+print(f'saved_models\\{args.model}')
 """
 
+
+
+
+# I want to get it working like this but not working for some reason
+#model = keras.models.load_model('saved_models\\' + model_name)
 model = keras.models.load_model('saved_models\my_model_bs1_eps10')
 
 
