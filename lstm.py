@@ -9,6 +9,7 @@ from parameters_and_imports import *
 df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
                     end=todays_date)
 
+df.to_hdf(f'stock_data\\{stock_ticker}.h5', key='df')
 
 """
 plt.figure(figsize=(16,8))
