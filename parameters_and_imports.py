@@ -3,6 +3,7 @@ import numpy as np
 import pandas_datareader as web
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from datetime import date, timedelta
 from sklearn.preprocessing import MinMaxScaler
 
@@ -20,4 +21,4 @@ todays_date = date.today()
 
 training_percentage = 0.8
 batch_size = 1
-epochs = 10
+epochs = 3
