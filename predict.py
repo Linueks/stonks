@@ -1,17 +1,21 @@
 from tensorflow import keras
 from parameters_and_imports import *
 import argparse
+from data_reader import get_stock
 
 
 
+
+"""
 parser = argparse.ArgumentParser()
-parser.add_argument('model', help='current format for model name:\
+parser.add_argument('model',
+                default='saved_models\my_model_bs1_eps10',
+                help='current format for model name:\
                 my_model_bsX_epsY, where bs is batch size and eps is epochs')
 args = parser.parse_args()
 model_name = args.model
 
 
-"""
 for some reason getting error when using the f-string so have to hard code name i guess........
 print(f'saved_models\{args.model}')
 print(model_name)
@@ -40,9 +44,8 @@ last_sixty_days = web.DataReader(stock_ticker, data_source='yahoo',
 """
 
 
-last_sixty_days = web.DataReader(stock_ticker, data_source='yahoo',
-                            start=start_date, end=todays_date)
-last_sixty_days = last_sixty_days.filter(['Close'])[-60:].values
+stock_data = get_stock()
+last_sixty_days = stock_data.filter(['Close'])[-60:].values
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_data = scaler.fit_transform(last_sixty_days)
 last_sixty_days_scaled = scaler.transform(last_sixty_days)
