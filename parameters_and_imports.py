@@ -7,12 +7,13 @@ import seaborn as sns
 from datetime import date, timedelta
 from sklearn.preprocessing import MinMaxScaler
 
-plt.style.use('ggplot')
+sns.set_style('whitegrid')
+#plt.style.use('ggplot')
 
 
 
 
-stock_ticker = 'TSLA'
+stock_ticker = 'AMZN'
 start_date = '2015-01-01'
 end_date = '2021-01-07'
 todays_date = date.today()
@@ -21,4 +22,4 @@ todays_date = date.today()
 
 training_percentage = 0.8
 batch_size = 1
-epochs = 3
+epochs = 5
