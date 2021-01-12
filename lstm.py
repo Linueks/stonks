@@ -1,15 +1,15 @@
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 from parameters_and_imports import *
+from data_reader import get_stock
 
 
 
 
 #get the stock quote
-df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
-                    end=todays_date)
+df = get_stock()
 
-df.to_hdf(f'stock_data\\{stock_ticker}.h5', key='df')
+
 
 """
 plt.figure(figsize=(16,8))
