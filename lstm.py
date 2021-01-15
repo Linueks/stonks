@@ -1,7 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 from parameters_and_imports import *
-from data_reader import get_stock
 
 
 

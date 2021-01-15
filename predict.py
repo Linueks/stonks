@@ -1,7 +1,6 @@
 from tensorflow import keras
 from parameters_and_imports import *
 import argparse
-from data_reader import get_stock
 
 
 

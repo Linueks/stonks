@@ -6,8 +6,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import date, timedelta
 from sklearn.preprocessing import MinMaxScaler
+from data_reader import get_stock
+
 
 sns.set_style('whitegrid')
+sns.color_palette('rocket')
 #plt.style.use('ggplot')
 
 
