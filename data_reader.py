@@ -11,10 +11,10 @@ def get_stock(force_update=True):
         df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
                             end=todays_date)
         df['Daily Return'] = df['Adj Close'].pct_change()
-        df.to_hdf(f'stock_data\\{stock_ticker}.h5', key='df')
+        df.to_hdf(f'stock_data\{stock_ticker}.h5', key='df')
 
     try:
-        with open(f'stock_data\\{stock_ticker}') as f:
+        with open(f'stock_data\{stock_ticker}.h5') as f:
             time_since = os.path.getmtime(f)
             time_since_days = np.round(time_since / 8.64e7, 2)
 
