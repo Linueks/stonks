@@ -1,5 +1,5 @@
 from parameters_and_imports import *
-import os
+
 
 
 
@@ -13,7 +13,6 @@ def get_stock(force_update=True):
         df['Daily Return'] = df['Adj Close'].pct_change()
         df.to_hdf(f'stock_data\\{stock_ticker}.h5', key='df')
 
-
     try:
         with open(f'stock_data\\{stock_ticker}') as f:
             time_since = os.path.getmtime(f)
@@ -24,7 +23,7 @@ def get_stock(force_update=True):
                         with force_update=True')
             df = pd.read_hdf(f)
 
-    except IOError:
+    except FileNotFoundError:
         df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
                             end=todays_date)
         df['Daily Return'] = df['Adj Close'].pct_change()
@@ -38,9 +37,4 @@ def get_stock(force_update=True):
 
 
 if __name__=='__main__':
-    #get_stock()
-
-    with open(f'stock_data\\{stock_ticker}.h5') as f:
-        time_since = os.path.getmtime(f'stock_data\\{stock_ticker}.h5')
-        print(time_since / 8.64e7)
-        print('hei')
+    get_stock()

@@ -1,6 +1,7 @@
 from tensorflow import keras
 from parameters_and_imports import *
 import argparse
+from data_reader import get_stock
 
 
 
@@ -33,7 +34,7 @@ model = keras.models.load_model('saved_models\my_model_bs1_eps10')
 
 
 #this number 60 is arbitrary i think, just using it for now
-start = todays_date - timedelta(days=60)
+start = todays_date - datetime.timedelta(days=60)
 #this causes problems because there're no values for sundays and holidays
 #can get around by using the start_date set in params and imports and picking
 #out the last 60 values present in that data

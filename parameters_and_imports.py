@@ -4,9 +4,10 @@ import pandas_datareader as web
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from datetime import date, timedelta
+import datetime as datetime
 from sklearn.preprocessing import MinMaxScaler
-from data_reader import get_stock
+#from data_reader import get_stock
+import os
 
 
 sns.set_style('whitegrid')
@@ -16,13 +17,15 @@ sns.color_palette('rocket')
 
 
 
-stock_ticker = 'AMZN'
+stock_ticker = 'AAPL'
 start_date = '2015-01-01'
 end_date = '2021-01-07'
-todays_date = date.today()
+todays_date = datetime.date.today()
 
 
 
 training_percentage = 0.8
-batch_size = 1
-epochs = 5
+batch_size = 64
+epochs = 10
+sequence_length = 60
+future_period_predict = 3

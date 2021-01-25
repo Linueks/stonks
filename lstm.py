@@ -1,22 +1,13 @@
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 from parameters_and_imports import *
-
+from data_reader import get_stock
 
 
 
 #get the stock quote
 df = get_stock()
 
-
-
-"""
-plt.figure(figsize=(16,8))
-plt.plot(df['Close'])
-plt.xlabel('Date', fontsize=18)
-plt.ylabel('Close Price USD [$]', fontsize=18)
-plt.show()
-"""
 
 
 #generating training and test samples
@@ -34,9 +25,8 @@ training_data = scaled_data[0:training_data_length, :]
 #splitting into x_train and y_train datasets. Here the
 x_train = []
 y_train = []
-x_train_len = 60
-for i in range(x_train_len, len(training_data)):
-    x_train.append(training_data[i-x_train_len:i, 0])
+for i in range(sequence_length, len(training_data)):
+    x_train.append(training_data[i-sequence_length:i, 0])
     y_train.append(training_data[i, 0])
 
 x_train, y_train = np.array(x_train), np.array(y_train)
@@ -70,8 +60,8 @@ y_test = dataset[training_data_length:, :]
 
 #here i use x_train_len again, because theyre both the same value in my original
 #code, however might be better to use two distinct variables here tbh
-for i in range(x_train_len, len(test_data)):
-    x_test.append(test_data[i-x_train_len:i, 0])
+for i in range(sequence_length, len(test_data)):
+    x_test.append(test_data[i-sequence_length:i, 0])
 
 
 
