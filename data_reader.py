@@ -4,10 +4,11 @@ from parameters_and_imports import *
 
 
 
-def get_stock(force_update=True):
+def get_stock(force_update=False):
 
 
-    if force_update:
+    if force_update==True:
+        print('Force update')
         df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
                             end=todays_date)
         df['Daily Return'] = df['Adj Close'].pct_change()
@@ -15,15 +16,17 @@ def get_stock(force_update=True):
 
     try:
         with open(f'stock_data\{stock_ticker}.h5') as f:
-            time_since = os.path.getmtime(f)
+            print('Local')
+            time_since = os.path.getmtime(f.name)
             time_since_days = np.round(time_since / 8.64e7, 2)
 
             if time_since_days > 7:
                 print(f'{time_since_days} since last update, consider running\
                         with force_update=True')
-            df = pd.read_hdf(f)
+            df = pd.read_hdf(f.name)
 
     except FileNotFoundError:
+        print('FileNotFoundError')
         df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
                             end=todays_date)
         df['Daily Return'] = df['Adj Close'].pct_change()
