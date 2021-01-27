@@ -25,7 +25,7 @@ todays_date = datetime.date.today()
 
 
 
-training_percentage = 0.8
+training_percentage = 0.7
 batch_size = 64
 epochs = 10
 sequence_length = 60

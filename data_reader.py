@@ -9,7 +9,7 @@ def get_stock(df, force_update=False):
 
     if force_update==True:
         print('Force update')
-        df = web.DataReader(stock_ticker, data_source='google', start=start_date,
+        df = web.DataReader(stock_ticker, data_source='yahoo', start=start_date,
                             end=todays_date)
         df['Daily Return'] = df['Adj Close'].pct_change(periods=1)
         df.to_hdf(f'stock_data\{stock_ticker}.h5', key='df')
