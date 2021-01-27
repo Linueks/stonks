@@ -1,5 +1,3 @@
-from keras.models import Sequential
-from keras.layers import Dense, LSTM
 from parameters_and_imports import *
 from data_reader import get_stock
 
@@ -50,7 +48,7 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 
 #train the model
 model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
-model.save(f'saved_models/my_model_bs{batch_size}_eps{epochs}')
+model.save(f'saved_models/predictor_bs{batch_size}_eps{epochs}')
 
 test_data = scaled_data[training_data_length - x_train_len:, :]
 x_test = []
