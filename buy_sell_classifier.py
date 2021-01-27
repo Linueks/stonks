@@ -76,13 +76,54 @@ def preprocess_df(df, verbose=False):#, training_percentage):
 
 
 
-def recurrent_net():
-    return
+def recurrent_net(x_train, y_train, x_validation, y_validation):
+    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+    #print(x_train.shape)
+
+
+    model = Sequential()
+    model.add(LSTM(128, input_shape=(60, 1), return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(BatchNormalization())
+    model.add(Dense(32, activation='relu'))
+    model.add(Dropout(0.2))
+    model.add(Dense(2, activation='softmax'))
+
+    optimizer = tf.keras.optimizers.Adam(lr=0.001, decay=1e-6)
+
+    model.compile(
+        loss='mean_squared_error',
+        optimizer=optimizer,
+        metrics=['accuracy']
+    )
+
+
+    """
+    history = model.fit(
+        x_train, y_train,
+        batch_size = batch_size,
+        epochs = epochs,
+        validation_data = (x_validation, y_validation)
+    )
+    """
+
+    model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
+    model.save(f'saved_models/classifier_bs{batch_size}_eps{epochs}')
+
+
+
+    score = model.evaluate(x_validation, y_validation, verbose=0)
+    print('Test loss: ', score[0])
+    print('Test accuracy: ', score[1])
+    model.save(f'saved_models/classifier_bs{batch_size}_eps{epochs}')
 
 
 
 
 
-
-stock_data = get_stock(stock_ticker, force_update=True)
+stock_data = get_stock(stock_ticker)
 x_train, y_train, x_validation, y_validation = preprocess_df(stock_data)
+
+print(x_train.shape, y_train.shape, x_validation.shape, y_validation.shape)
+
+recurrent_net(x_train, y_train, x_validation, y_validation)
