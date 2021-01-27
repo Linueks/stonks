@@ -7,6 +7,9 @@ import seaborn as sns
 import datetime as datetime
 from sklearn import preprocessing
 from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
+from keras.models import Sequential
+from keras.layers import Dense, LSTM, Dropout, BatchNormalization
 #from data_reader import get_stock
 import os
 
